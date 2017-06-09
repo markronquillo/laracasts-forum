@@ -9,8 +9,15 @@ class Thread extends Model
 
 	public function path() 
 	{
-		return '/threads/' . $this->id;
+		return "/threads/{$this->channel->slug}/{$this->id}";
 	}
+
+	public function addReply($reply) 
+	{
+		return $this->replies()->create($reply);
+	}
+
+	//////////////////////////////////////////////////////
 
 	public function replies() 
 	{
@@ -22,9 +29,9 @@ class Thread extends Model
 		return $this->belongsTo('App\User', 'user_id');
 	}
 
-	public function addReply($reply) 
+	public function channel() 
 	{
-		return $this->replies()->create($reply);
+		return $this->belongsTo('App\Channel');
 	}
 	
 }

@@ -56,6 +56,58 @@ Add a function.php to be autoloaded during development only.
 
 # Episode 8: The exception handling conundrum
 
+Adam Wathan's fix for exception handling during testing.
 
 
+# Episode 9: A Thread Should be assigned a channel.
+
+We refactor the routes such that `/threads/channel/1` points to the thread page.
+
+# Episode 10: How to Test Validation Errors
+
+To test validation errors
+
+1. Inside your test file, assert that `assertSessionHasErrors('name')` where name is the field name that fails the validation
+
+2. Inside your controller, validate the request object by
+
+```
+$validate(request(), [
+	'name' => 'required'
+	'channel_id' => "required|exists:channel,1"
+]);
+```
+ 
+# Episode 11: A User can filter threads
+
+We have created a page that shows threads under a specific channel.
+
+To change the key used in the Route model binding:
+
+```php
+public function getRouteKeyName()
+{
+	return 'slug';
+}
+```
+
+# Episode 12 : Validation Errors and Old Data
+
+In your blade.php file you can get the old (session) value (for failed post form requests) using `old('name')`.
+
+```
+@if (count($errors))
+<ul class="alert alert-danger">
+    @foreach($errors->all() as $error) 
+        <li>{{ $error }}</li>
+    @endforeach
+</ul>
+@endif
+```
+
+# Episode 13:
+
+`\View::share('channels', ...)`
+
+php artisan make:provider ViewServiceProvider
 
